@@ -84,11 +84,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // Add this method
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Your React app URL
+        configuration.setAllowedOrigins(Arrays.asList("http://35.210.246.177")); // Update to match your frontend IP
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
