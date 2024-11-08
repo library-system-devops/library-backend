@@ -20,9 +20,17 @@ FROM openjdk:17-slim
 
 WORKDIR /app
 
-# Copy jar from build stage
+# Copy the built JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
+# Copy the wait-for-it script into the image
+COPY wait-for-it.sh /app/wait-for-it.sh
+
+# Make the wait-for-it script executable
+RUN chmod +x /app/wait-for-it.sh
+
+# Expose the port the application will run on
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Use wait-for-it to wait for MySQL to be ready, then run the application
+ENTRYPOINT ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "app.jar"]
