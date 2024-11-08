@@ -20,6 +20,9 @@ FROM openjdk:17-slim
 
 WORKDIR /app
 
+# Install netcat (nc) to enable "wait-for-it.sh"
+RUN apt-get update && apt-get install -y netcat
+
 # Copy the built JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
